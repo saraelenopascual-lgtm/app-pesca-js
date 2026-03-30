@@ -1,16 +1,15 @@
 import express from 'express';
+import cors from 'cors'; // 1. Importar
 import userRoutes from './routes/user.routes.js';
 
 const app = express();
 
-// Middleware para que Express entienda JSON en el cuerpo de las peticiones
+app.use(cors()); // 2. Activar permisos para otros dominios
 app.use(express.json());
 
-// Conectamos las rutas de usuarios bajo el prefijo /api/users
 app.use('/api/users', userRoutes);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
-  console.log(`📂 Ruta de prueba: http://localhost:3000/api/users`);
+  console.log(`🚀 Backend corriendo en http://localhost:${PORT}`);
 });
