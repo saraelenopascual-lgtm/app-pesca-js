@@ -14,11 +14,12 @@
   "author": "Sara",
   "type": "module",
   "main": "index.js",
- "scripts": {
-  "start": "node app.js",
-  "dev": "node --watch app.js" 
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mysql2": "^3.20.0"
   }
 }
