@@ -21,14 +21,18 @@ export const getEstadisticas = async (req, res) => {
 
 export const crearCaptura = async (req, res) => {
     try {
-        const { especie, peso, lugar, anzuelo, gameta_largo, plomo_tipo } = req.body;
+        // 1. Añadimos latitud y longitud a la extracción de datos
+        const { especie, peso, lugar, anzuelo, gameta_largo, plomo_tipo, latitud, longitud } = req.body;
+        
+        // 2. Actualizamos la consulta SQL con los 8 campos y 8 interrogantes
         const [result] = await pool.query(
-            'INSERT INTO capturas (especie, peso, lugar, anzuelo, gameta_largo, plomo_tipo) VALUES (?, ?, ?, ?, ?, ?)',
-            [especie, peso, lugar, anzuelo, gameta_largo, plomo_tipo]
+            'INSERT INTO capturas (especie, peso, lugar, anzuelo, gameta_largo, plomo_tipo, latitud, longitud) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            [especie, peso, lugar, anzuelo, gameta_largo, plomo_tipo, latitud || null, longitud || null]
         );
+        
         res.status(201).json({ mensaje: "✅ Captura guardada con éxito", id: result.insertId });
     } catch (error) {
-        console.error(error);
+        console.error("Error al guardar:", error);
         res.status(500).json({ error: "❌ Error al guardar en la base de datos" });
     }
 };
